@@ -19,9 +19,16 @@ namespace WPFCRUD
     /// </summary>
     public partial class WindowAdd : Window
     {
+        Person Person;
+        PersonContext db;
+        
         public WindowAdd()
         {
             InitializeComponent();
+            Person = new Person(" ",18);
+            spInput.DataContext = Person;
+            db = new PersonContext();
+
         }
 
         private void TextBlock_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -37,6 +44,19 @@ namespace WPFCRUD
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private async void btnClose_Click1(object sender, RoutedEventArgs e)
+        {
+            //Person.Name = "Dezső";
+            
+            //MessageBox.Show(Person.ToString());
+            Person.Id = 0;
+            db.Persons.Add(Person);
+            await db.SaveChangesAsync();
+            Person.Name = "";
+            Person.Age = 18;
+
         }
     }
 }
